@@ -1,0 +1,39 @@
+{
+  "users": [
+    {
+      "id": "2",
+      "username": "j.riquelme",
+      "correo": "j.riquelme@duocuc.cl",
+      "pass": "1234",
+      "rol": "prof"
+    },
+    {
+      "id": "2fc1",
+      "username": "m.jansem",
+      "correo": "ma.jansen@duocuc.cl",
+      "pass": "1234",
+      "rol": "alum"
+    },
+    {
+      "id": "ba19",
+      "username": "m.jansen",
+      "correo": "ma.jansen@duocuc.cl",
+      "pass": "1234",
+      "rol": "alum"
+    }
+  ],
+  "clases": [
+    {
+      "idClase": 1,
+      "nombreClase": "Programación",
+      "profesor": "j.riquelme",
+      "id": "0664"
+    },
+    {
+      "idClase": 2,
+      "nombreClase": "Ética",
+      "profesor": "j.riquelme",
+      "id": "69ef"
+    }
+  ]
+}

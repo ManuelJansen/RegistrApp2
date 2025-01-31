@@ -1,0 +1,57 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-icon type="button" routerLink="/login" slot="start" name="arrow-back-outline"></ion-icon>
+    <ion-title>Recuperación de Contraseña</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!--Card Ingreso de Datos-->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title id="titulos">Ingrese sus Datos:</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-input [(ngModel)]="user.usuario" id="inputs" label-placement="floating" fill="outline" label="Usuario" placeholder="Ingrese su Usuario"></ion-input>
+      <br>
+      <ion-button (click)="recuperar()" id="btnAzules">Enviar Código</ion-button>
+    </ion-card-content>
+  </ion-card>
+  <!--Card Loading--> 
+  <ion-card *ngIf="carga" id="loading">
+    <ion-card-content>
+      <ion-label>Cargando</ion-label>
+      <mat-spinner></mat-spinner>
+    </ion-card-content>
+  </ion-card>
+  <!--Card Error-->
+  <ion-card *ngIf="error">
+    <ion-card-content>
+      <ion-card-title>Error</ion-card-title>
+      <ion-card-subtitle id="error">El correo ingresado no es válido</ion-card-subtitle>
+    </ion-card-content>
+  </ion-card>
+  <!--Card NewPass-->
+  <ion-card *ngIf="cambiar">
+    <ion-card-header>
+      <ion-card-title>Ingrese su nueva contraseña:</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-input [(ngModel)]="newPass" fill="outline" label-placement="floating" label="Contraseña Nueva" type="password"></ion-input>
+      <br>
+      <ion-button (click)="cambiarPass()">Cambiar</ion-button>
+    </ion-card-content>
+  </ion-card>
+  <!--Card Ingreso de Código-->
+  <ion-card *ngIf="correoEnviado">
+    <ion-card-header>
+      <ion-card-title id="titulos" >Código de Recuperación</ion-card-title>
+      <ion-card-subtitle id="titulos">Se ha enviado un código de 6 dígitos al correo asociado a su usuario.</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-input [(ngModel)]="numeroIngresado"  id="inputs" fill="outline" label-placement="floating" label="Código" placeholder="Ingrese el código"></ion-input>
+      <br>
+      <ion-button (click)="comparar()" id="btnAzules">Ingresar</ion-button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

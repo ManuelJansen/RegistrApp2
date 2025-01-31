@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title type="button" (click)="recargarPagina()" >RegistrApp</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-card>
+    <ion-card-content>
+      <ion-img src="assets/img/logoDuoc.png"></ion-img>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title id="titulos">Iniciar Sesión</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <!--Mensaje de Error-->
+      <div>
+        <ion-label id="error" *ngIf="error">{{msj}}</ion-label>
+      </div>
+      <!--Usuario-->
+      <ion-input 
+        [(ngModel)]="user.usuario" 
+        label-placement="floating" 
+        fill="outline" label="Usuario"
+        placeholder="Ingrese su Usuario"
+        id="inputs">
+      </ion-input>
+      <br>
+      <!--Contraseña-->
+      <ion-input 
+        [(ngModel)]="user.password" 
+        type="password" 
+        label-placement="floating" 
+        fill="outline" 
+        label="Contraseña"
+        placeholder="Ingrese su Contraseña"
+        id="inputs">
+      </ion-input>
+      <!--Mat Spinner--> 
+      <div id="seccionCarga" *ngIf="carga">
+        <ion-label>Cargando</ion-label>
+        <mat-spinner></mat-spinner>
+      </div>
+      <!--Botón de Ingresar-->
+      <ion-button (click)="ingresar()" id="btnAzules">Ingresar</ion-button>
+      <br>
+      <ion-button routerLink="/register" id="btnAzules">Registrarse</ion-button>
+      <!--Botón de Recuperar Contraseña-->
+      <ion-button routerLink="/recuperar-pass"  expand="block" id="btnSinfondo">¿Olvidaste tu Contraseña?</ion-button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

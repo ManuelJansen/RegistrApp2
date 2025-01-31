@@ -1,0 +1,68 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title type="button" (click)="recargarPagina()">RegistrApp</ion-title>
+    <ion-icon type="button" routerLink="/login" slot="start" name="arrow-back-outline"></ion-icon>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-card>
+    <ion-card-content>
+      <ion-img src="assets/img/logoDuoc.png"></ion-img>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title id="titulos">Registrarse</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      
+      <!--Usuario-->
+      <ion-input
+        [(ngModel)]="user.usuario"
+        label-placement="floating"
+        fill="outline"
+        label="Usuario"
+        placeholder="Ingrese su Usuario"
+        id="inputs"
+      >
+      </ion-input>
+      <br>
+      <ion-input
+        [(ngModel)]="user.correo"
+        label-placement="floating"
+        fill="outline"
+        label="Correo"
+        placeholder="Ingrese su Correo"
+        id="inputs"
+      >
+      </ion-input>
+      <br>
+      <!--Contraseña-->
+      <ion-input
+        [(ngModel)]="user.password"
+        type="password"
+        label-placement="floating"
+        fill="outline"
+        label="Contraseña"
+        placeholder="Ingrese su Contraseña"
+        id="inputs"
+      >
+      </ion-input>
+      <br>
+      <!--Tipo-->
+      <ion-select [(ngModel)]="user.tipo" fill="outline" label-placement="floating" label="Seleccione si es profesor o alumno">
+        <ion-select-option value="alum">Alumno</ion-select-option>
+        <ion-select-option value="prof">Profesor</ion-select-option>
+      </ion-select> 
+      <br>
+      <!--Mat Spinner-->
+
+      <!--Botón de Ingresar-->
+      <ion-button (click)="registerApi()" id="btnAzules">Registrarse</ion-button>
+      <br>
+      <!--Botón de Recuperar Contraseña-->
+      <ion-button routerLink="/recuperar-pass" expand="block" id="btnSinfondo">¿Olvidaste tu Contraseña?</ion-button>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

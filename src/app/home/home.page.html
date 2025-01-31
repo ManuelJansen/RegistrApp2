@@ -1,0 +1,22 @@
+<!--Home Profesor-->
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-icon type="button" (click)="volverInicio()" slot="start" name="arrow-back-outline"></ion-icon>
+    <ion-icon type="button" (click)="logOut()" slot="end" name="log-out-outline"></ion-icon>
+    <ion-title>RegistrApp</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div id="container">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title id="titulos">Perfil</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-img src="assets/img/mouimg.jpg"></ion-img>
+        <ion-label id="titulos">Bienvenido profesor {{nombreUsuario}}</ion-label>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
