@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
 import { BarcodeScanner, BarcodeFormat } from '@capacitor-mlkit/barcode-scanning';
+import { ToastController } from '@ionic/angular';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class QrScannerService {
   //Data a guardar 
-  scannedData: { IdClase: string; profesor: string; NomClase: string; }[] = [];
+  
 
-  constructor() { }
+  constructor(private toastController: ToastController) { }
 
-
-  //Verifica permisos de Camara
 
   async checkPermissions() {
     const { camera } = await BarcodeScanner.checkPermissions();
@@ -20,72 +20,59 @@ export class QrScannerService {
     }
   }
 
-//Funcion extraer datos del QR
-
-  extractData(scannedCode: string): { IdClase: string; profesor: string; NomClase: string } {
-    try {
-      const parsedData = JSON.parse(scannedCode); // Intenta convertir el string en JSON
-      return {
-        IdClase: parsedData.IdClase || 'Desconocido',
-        profesor: parsedData.profesor || 'Desconocido',
-        NomClase: parsedData.NomClase || 'Desconocido',
-      };
-    } catch (error) {
-      console.error('Error al procesar el QR:', error);
-      return { IdClase: 'Error', profesor: 'Error', NomClase: 'Error' };
-    }
-  }
-
-
-    //Funcion scanear QR 
-
   async scanQrCode() {
     try {
       await this.checkPermissions();
-
-      //  Oculta la UI antes de abrir la cámara
-      document.body.classList.add('barcode-scanner-active');
 
       const { barcodes } = await BarcodeScanner.scan({
         formats: [BarcodeFormat.QrCode], // Solo escanea códigos QR
       });
 
-      //  Restaura la UI después de escanear
-      document.body.classList.remove('barcode-scanner-active');
-
       if (barcodes.length > 0) {
-        const scannedCode = barcodes[0].rawValue || 'Qr Invalido';
+        const scannedCode = barcodes[0].rawValue || 'QR Inválido';
+
+        // 🔹 Extraer los datos desde el código QR
         const extractedData = this.extractData(scannedCode);
-        this.saveScannedData(extractedData.IdClase, extractedData.profesor, extractedData.NomClase);
+
+        // 🔹 Mostrar toast con los datos extraídos
+        this.generarToast(
+          `📌 ID Clase: ${extractedData.IdClase} | 👨‍🏫 Profesor: ${extractedData.Profesor} | 📚 Clase: ${extractedData.NomClase}`
+        );
+
         return extractedData;
       }
       return null;
     } catch (error) {
       console.error('Error escaneando el QR:', error);
-      //  Asegura que la UI se restaure en caso de error
-      document.body.classList.remove('barcode-scanner-active');
       return null;
     }
   }
 
-  //Funcion guardar data extraida
-
-  saveScannedData(IdClase: string, profesor: string, NomClase: string) {
-    const newScan = {
-      IdClase: IdClase,
-      profesor: profesor,
-      NomClase: NomClase,
-    };
-
-    this.scannedData.push(newScan);
-    console.log('Datos guardados:', this.scannedData);
+  // Función para extraer datos del QR (debe estar en formato JSON)
+  extractData(scannedCode: string): { IdClase: string; Profesor: string; NomClase: string } {
+    try {
+      const parsedData = JSON.parse(scannedCode);
+      return {
+        IdClase: parsedData.IdClase || 'Desconocido',
+        Profesor: parsedData.Profesor || 'Desconocido',
+        NomClase: parsedData.NomClase || 'Desconocido',
+      };
+    } catch (error) {
+      console.error('Error al procesar el QR:', error);
+      return { IdClase: 'Error', Profesor: 'Error', NomClase: 'Error' };
+    }
   }
 
-    //Funcion obtener data scaneada
+  // 🔹 Función para mostrar un toast con los datos escaneados
+  async generarToast(mensaje: string) {
+    const toast = await this.toastController.create({
+      message: mensaje,
+      duration: 3000,
+      position: 'bottom',
+      cssClass: 'custom-toast', // Opción para personalizar el estilo del toast
+    });
 
-  getScannedData() {
-    return this.scannedData;
+    await toast.present();
   }
+ 
 }
-
-

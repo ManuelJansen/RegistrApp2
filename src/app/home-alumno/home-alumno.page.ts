@@ -15,7 +15,7 @@ import { QrScannerService } from '../Servicios/qr-scanner.service';
 })
 export class HomeAlumnoPage implements OnInit {
 
-  scannedList: { IdClase: string; profesor: string; NomClase: string }[] = [];
+  scannedData: any = null; // Variable para almacenar los datos escaneados
 
   constructor(private router: Router, private auth: AuthService,private qrScannerService: QrScannerService ) {}
 
@@ -44,10 +44,8 @@ export class HomeAlumnoPage implements OnInit {
 
 // Apartado LectorQR
 
-async scanCode() {
-  const scannedData = await this.qrScannerService.scanQrCode();
-  if (scannedData) {
-    this.scannedList = this.qrScannerService.getScannedData();
+  async scan() {
+    this.scannedData = await this.qrScannerService.scanQrCode();
   }
 
 
@@ -74,6 +72,4 @@ async scanCode() {
 //      console.error('Error al escanear:', error);
 //    }
 
-}
-  
 };
