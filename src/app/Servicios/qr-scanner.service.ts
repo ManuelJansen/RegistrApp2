@@ -7,11 +7,9 @@ import { ToastController } from '@ionic/angular';
   providedIn: 'root'
 })
 export class QrScannerService {
-  //Data a guardar 
-  
+  scannedLinks: string[] = []; // Almacenar los enlaces escaneados
 
-  constructor(private toastController: ToastController) { }
-
+  constructor(private toastController: ToastController) {}
 
   async checkPermissions() {
     const { camera } = await BarcodeScanner.checkPermissions();
@@ -31,15 +29,13 @@ export class QrScannerService {
       if (barcodes.length > 0) {
         const scannedCode = barcodes[0].rawValue || 'QR Inválido';
 
-        // 🔹 Extraer los datos desde el código QR
-        const extractedData = this.extractData(scannedCode);
+        // 🔹 Almacenar el link escaneado
+        this.scannedLinks.push(scannedCode);
 
-        // 🔹 Mostrar toast con los datos extraídos
-        this.generarToast(
-          `📌 ID Clase: ${extractedData.IdClase} | 👨‍🏫 Profesor: ${extractedData.Profesor} | 📚 Clase: ${extractedData.NomClase}`
-        );
+        // 🔹 Mostrar toast con el enlace escaneado
+        this.generarToast(`🔗 Link escaneado: ${scannedCode}`);
 
-        return extractedData;
+        return scannedCode;
       }
       return null;
     } catch (error) {
@@ -48,32 +44,7 @@ export class QrScannerService {
     }
   }
 
-  // Función para extraer datos del QR (debe estar en formato JSON)
-  extractData(scannedCode: string): { IdClase: string; Profesor: string; NomClase: string } {
-    try {
-      const parsedData = JSON.parse(scannedCode);
-  
-      // Verificar si las claves esperadas existen en el JSON
-      if (!parsedData.IdClase || !parsedData.Profesor || !parsedData.NomClase) {
-        throw new Error("El QR no contiene los datos esperados.");
-      }
-  
-      return {
-        IdClase: parsedData.IdClase,
-        Profesor: parsedData.Profesor,
-        NomClase: parsedData.NomClase,
-      };
-    } catch (error) {
-      console.error('Error al procesar el QR:', error);
-      
-      // Mostrar un toast indicando que hubo un error
-      this.generarToast("⚠️ Error: QR inválido o formato incorrecto.");
-  
-      return { IdClase: 'Error', Profesor: 'Error', NomClase: 'Error' };
-    }
-  }
-
-  // 🔹 Función para mostrar un toast con los datos escaneados
+  // 🔹 Función para mostrar un toast con el link escaneado
   async generarToast(mensaje: string) {
     const toast = await this.toastController.create({
       message: mensaje,
