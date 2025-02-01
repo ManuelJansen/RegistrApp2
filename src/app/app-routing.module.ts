@@ -20,7 +20,7 @@ const routes: Routes = [
   {
     path: 'home-alumno',
     loadChildren: () => import('./home-alumno/home-alumno.module').then( m => m.HomeAlumnoPageModule),
-
+    canActivate:[authGuard],
   },
   {
     path: 'recuperar-pass',

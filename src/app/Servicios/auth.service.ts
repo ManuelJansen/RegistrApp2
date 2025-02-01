@@ -31,11 +31,11 @@ export class AuthService {
     return new Promise((resolve)=>{
       this.api.login(user).subscribe((response: any)=>{
         const usuario = {
-          id: response[0].id,
+          id: response.id,
           username: user,
-          correo: response[0].correo,
+          correo: response.correo,
           pass: newPass,
-          rol: response[0].rol,
+          rol: response.rol,
         };
         console.log(usuario);
         this.api.eliminarUsuario(usuario.id).subscribe((response: any)=>{
@@ -60,9 +60,9 @@ export class AuthService {
   recuperarPassApi(user: string): Promise<boolean>{
     return new Promise((resolve)=>{
       this.api.login(user).subscribe((response: any)=>{
-        if(response.length>0){
+        if(response){
           console.log('usuario existe');
-          this.correo = response[0].correo;
+          this.correo = response.correo;
           resolve(true);
         }else{
           console.log('usuario no existe');
@@ -83,6 +83,7 @@ export class AuthService {
           console.log('Usuario ya existe');
           resolve(false);
         }else{
+          console.log('usuario no existe');
           this.api.register(data).subscribe((response: any)=>{
             console.log(response);
               setTimeout(() => {
@@ -100,11 +101,11 @@ export class AuthService {
     return new Promise((resolve)=>{
       this.api.login(user).subscribe((response: any)=>{
         console.log(response)
-        if(response.length>0){
-          if((response[0].username == user || response[0].correo == user) && response[0].pass == pass){
-            console.log(response)
-            this.storage.setItem('conectado', JSON.stringify(response[0]));
-            this.tipo = response[0].rol;
+        if(response){
+          if((response.username == user || response.correo == user) && response.pass == pass){
+            console.log(response.username)
+            this.storage.setItem('conectado', JSON.stringify(response));
+            this.tipo = response.rol;
             resolve(true);
           }else{
             resolve(false);

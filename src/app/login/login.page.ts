@@ -58,7 +58,6 @@ export class LoginPage implements OnInit {
 
   ingresar() {
     if (this.user.usuario.length > 0 && this.user.password.length > 0) {
-      this.router.navigate(['/home-alumno']);
       this.error = false;
       this.auth.loginApi(this.user.usuario, this.user.password).then((res) => {
         if (res) {
