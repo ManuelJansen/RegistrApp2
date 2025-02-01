@@ -24,16 +24,20 @@
   ],
   "clases": [
     {
-      "idClase": 1,
-      "nombreClase": "Programación",
-      "profesor": "j.riquelme",
-      "id": "0664"
+      "id": "0664",
+      "IdClase": 1,
+      "Profesor": "j.riquelme",
+      "NomClase": "Programación"
+      
+      
     },
     {
-      "idClase": 2,
-      "nombreClase": "Ética",
-      "profesor": "j.riquelme",
-      "id": "69ef"
+      "id": "69ef",
+      "IdClase": 2,
+      "Profesor": "j.riquelme",
+      "NomClase": "Ética"
+      
+      
     }
   ]
 }
