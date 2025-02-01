@@ -52,13 +52,23 @@ export class QrScannerService {
   extractData(scannedCode: string): { IdClase: string; Profesor: string; NomClase: string } {
     try {
       const parsedData = JSON.parse(scannedCode);
+  
+      // Verificar si las claves esperadas existen en el JSON
+      if (!parsedData.IdClase || !parsedData.Profesor || !parsedData.NomClase) {
+        throw new Error("El QR no contiene los datos esperados.");
+      }
+  
       return {
-        IdClase: parsedData.IdClase || 'Desconocido',
-        Profesor: parsedData.Profesor || 'Desconocido',
-        NomClase: parsedData.NomClase || 'Desconocido',
+        IdClase: parsedData.IdClase,
+        Profesor: parsedData.Profesor,
+        NomClase: parsedData.NomClase,
       };
     } catch (error) {
       console.error('Error al procesar el QR:', error);
+      
+      // Mostrar un toast indicando que hubo un error
+      this.generarToast("⚠️ Error: QR inválido o formato incorrecto.");
+  
       return { IdClase: 'Error', Profesor: 'Error', NomClase: 'Error' };
     }
   }
