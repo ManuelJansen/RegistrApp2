@@ -18,9 +18,9 @@ export class RegisterPage implements OnInit {
     private auth: AuthService,
     private toast: ToastController,
     private api: ApiService,
-  ) {}
+  ) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   user = {
     usuario: '',
@@ -35,29 +35,54 @@ export class RegisterPage implements OnInit {
   error = false;
   carga = false;
 
- 
+  //funcion para validar un correo electronico
+  validarCorreo(correo: string): boolean {
+    const regex: RegExp = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return regex.test(correo);
+  }
 
-  registerApi(){
-    if (this.user.usuario.length>0 && this.user.correo.length>0 &&
-        this.user.password.length>0 &&this.user.tipo.length>0){
-          const nuevoUsuario = {
-            username: this.user.usuario,
-            correo: this.user.correo,
-            pass: this.user.password,
-            rol: this.user.tipo
-          }
-          this.auth.registerApi(this.user.usuario, nuevoUsuario).then((res)=>{
-            console.log(res)
-            if(res){      
-              this.generarToast('Registro Exitoso')        
-              console.log(res);
-            };
-          });
+  // Función para validar la contraseña
+  validarContrasena(contrasena: string): boolean {
+    const regex: RegExp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])/;
+    return regex.test(contrasena);
+  }
+
+  registerApi() {
+    if (this.user.usuario.length > 0 && this.user.correo.length > 0 &&
+      this.user.password.length > 0 && this.user.tipo.length > 0) {
+
+      // Validar el formato del correo
+      if (!this.validarCorreo(this.user.correo)) {
+        this.generarToast('El formato del correo electrónico no es válido');
+        return;
+      }
+
+      // Validar la contraseña
+      if (!this.validarContrasena(this.user.password)) {
+        this.generarToast('La contraseña debe tener una mayúscula, una minúscula y un numero');
+        return;
+      }
+
+      const nuevoUsuario = {
+        username: this.user.usuario,
+        correo: this.user.correo,
+        pass: this.user.password,
+        rol: this.user.tipo
+      };
+
+      this.auth.registerApi(this.user.usuario, nuevoUsuario).then((res) => {
+        console.log(res);
+        if (res) {
+          this.generarToast('Registro Exitoso');
+          console.log(res);
+        }
+      });
+
     } else {
-      this.generarToast('Completar campos vacíos')
-    };
-  };
-  
+      this.generarToast('Completar campos vacíos');
+    }
+  }
+
 
   generarToast(mensaje: string) {
     const toast = this.toast.create({
