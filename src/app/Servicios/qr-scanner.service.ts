@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BarcodeScanner, BarcodeFormat } from '@capacitor-mlkit/barcode-scanning';
 import { ToastController } from '@ionic/angular';
+import { ApiService } from './api.service';
 
 
 @Injectable({
@@ -9,7 +10,13 @@ import { ToastController } from '@ionic/angular';
 export class QrScannerService {
   scannedLinks: string[] = []; // Almacenar los enlaces escaneados
 
-  constructor(private toastController: ToastController) {}
+  constructor() {}
+
+  private toastController: ToastController = new ToastController();
+
+  private api: ApiService = new ApiService();
+
+  private link = "";
 
   async checkPermissions() {
     const { camera } = await BarcodeScanner.checkPermissions();
@@ -33,8 +40,11 @@ export class QrScannerService {
         this.scannedLinks.push(scannedCode);
 
         // 🔹 Mostrar toast con el enlace escaneado
-        this.generarToast(`🔗 Link escaneado: ${scannedCode}`);
-
+        this.link = scannedCode;
+        this.api.infoClase(scannedCode).subscribe((response: any)=>{
+          this.generarToast(response.NomClase);
+          console.log(response);
+        });
         return scannedCode;
       }
       return null;
@@ -54,6 +64,10 @@ export class QrScannerService {
     });
 
     await toast.present();
+  }
+
+  getLink(){
+    return this.link;
   }
  
 }
