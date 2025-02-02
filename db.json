@@ -8,13 +8,6 @@
       "rol": "prof"
     },
     {
-      "id": "2fc1",
-      "username": "m.jansem",
-      "correo": "ma.jansen@duocuc.cl",
-      "pass": "1234",
-      "rol": "alum"
-    },
-    {
       "id": "ba19",
       "username": "m.jansen",
       "correo": "ma.jansen@duocuc.cl",
@@ -28,16 +21,12 @@
       "IdClase": 1,
       "Profesor": "j.riquelme",
       "NomClase": "Programación"
-      
-      
     },
     {
       "id": "69ef",
       "IdClase": 2,
       "Profesor": "j.riquelme",
       "NomClase": "Ética"
-      
-      
     }
   ]
 }
