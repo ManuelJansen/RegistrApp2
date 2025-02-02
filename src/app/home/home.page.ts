@@ -12,12 +12,16 @@ export class HomePage {
 
   constructor(private router: Router, private auth: AuthService) {}
 
+  
+
   user = {
     usuario: '',
     password: '',
   };
 
   nombreUsuario = '';
+  mostrarModal = false;
+  qrSeleccionado = '';
 
   ngOnInit() {
     this.user = history.state.user;
@@ -34,13 +38,17 @@ export class HomePage {
   };
   
 
-  verQR(clase: number) {
-    if (clase === 1) {
-      console.log("Mostrando QR de la Clase 1");
-    } else if (clase === 2) {
-      console.log("Mostrando QR de la Clase 2");
-    }
+
+   // 🔹 Mostrar QR en grande cuando se presiona el botón
+   mostrarQR(qrPath: string) {
+    this.qrSeleccionado = qrPath;
+    this.mostrarModal = true;
   }
-  
+
+  // 🔹 Cerrar el modal de QR
+  cerrarQR() {
+    this.mostrarModal = false;
+  }
+
   
 };
