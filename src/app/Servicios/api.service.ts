@@ -14,7 +14,10 @@ export class ApiService {
 
   private baseUrl = "https://mjansen.pythonanywhere.com/api";
 
+  private user = "";
+
   login(user: string):Observable<any>{
+    this.user = user;
     return this.http.get(this.baseUrl+"/users/" + user).pipe(retry(3));
   };
 
@@ -30,6 +33,14 @@ export class ApiService {
     return this.http.post(this.baseUrl+"/users", data).pipe(retry(3));
   };
 
+  asist(idclase: string, user: string): Observable<any>{
+    const data = {
+      idClase: idclase,
+      alumno1: user,
+    }
+    return this.http.post(this.baseUrl+"/asistencia", data);
+  }
+
   listarUsuarios(): Observable<any> {
     return this.http.get(this.baseUrl + '/users').pipe(retry(3));
   };
@@ -37,4 +48,8 @@ export class ApiService {
   eliminarUsuario(id: string): Observable<any>{
     return this.http.delete(this.baseUrl + '/users/' + id).pipe(retry(3));
   };
+
+  getUser(){
+    return this.user;
+  }
 }

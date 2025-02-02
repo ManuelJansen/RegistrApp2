@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BarcodeScanner, BarcodeFormat } from '@capacitor-mlkit/barcode-scanning';
 import { ToastController } from '@ionic/angular';
 import { ApiService } from './api.service';
+import { AuthService } from './auth.service';
 
 
 @Injectable({
@@ -15,6 +16,8 @@ export class QrScannerService {
   private toastController: ToastController = new ToastController();
 
   private api: ApiService = new ApiService();
+
+  private auth: AuthService = new AuthService();
 
   private link = "";
 
@@ -43,6 +46,10 @@ export class QrScannerService {
         this.link = scannedCode;
         this.api.infoClase(scannedCode).subscribe((response: any)=>{
           this.generarToast(response.NomClase);
+          let user = this.auth.getUser();
+          this.api.asist(response.IdClase, user).subscribe((response)=>{
+            console.log(response);
+          })
           console.log(response);
         });
         return scannedCode;
@@ -51,8 +58,8 @@ export class QrScannerService {
     } catch (error) {
       console.error('Error escaneando el QR:', error);
       return null;
-    }
-  }
+    };
+  };
 
   // 🔹 Función para mostrar un toast con el link escaneado
   async generarToast(mensaje: string) {
