@@ -1,6 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, retry } from 'rxjs';
+import { QrScannerService } from './qr-scanner.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +16,10 @@ export class ApiService {
 
   login(user: string):Observable<any>{
     return this.http.get(this.baseUrl+"/users/" + user).pipe(retry(3));
+  };
+
+  infoClase(linkClase: string):Observable<any>{
+    return this.http.get(linkClase);
   };
 
   register(data: any): Observable<any>{
