@@ -16,7 +16,25 @@
       <ion-card-content>
         <ion-img src="assets/img/mouimg.jpg"></ion-img>
         <ion-label id="titulos">Bienvenido profesor {{nombreUsuario}}</ion-label>
+
       </ion-card-content>
     </ion-card>
+
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title id="titulos">Tus Clases</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="qr-container">
+          <ion-button id="BtnAzules" (click)="verQR(1)"> QR Clase 1</ion-button>
+          <ion-img src="assets/img/Clase1.png" class="qr-image"></ion-img>
+        </div>
+        <div class="qr-container">
+          <ion-button id="BtnAzules" (click)="verQR(2)"> QR Clase 2</ion-button>
+          <ion-img src="assets/img/Clase2.png" class="qr-image"></ion-img>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
   </div>
 </ion-content>

@@ -32,7 +32,15 @@ export class HomePage {
     this.auth.logOut();
     this.router.navigate(['/login']);
   };
+  
 
-  //Aquí hacer lo del toast
+  verQR(clase: number) {
+    if (clase === 1) {
+      console.log("Mostrando QR de la Clase 1");
+    } else if (clase === 2) {
+      console.log("Mostrando QR de la Clase 2");
+    }
+  }
+  
   
 };
