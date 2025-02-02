@@ -19,6 +19,8 @@ export class AuthService {
 
   private tipo: string = "";
 
+  private user: string = "";
+
   private errorMsg: string = "";
 
   private correo: string = "";
@@ -52,10 +54,10 @@ export class AuthService {
           this.generarToast('Contraseña cambiada exitosamente');
           this.router.navigate(['/login']);
           resolve(true);
-        })
-      })
-    })
-  }
+        });
+      });
+    });
+  };
 
   recuperarPassApi(user: string): Promise<boolean>{
     return new Promise((resolve)=>{
@@ -98,6 +100,7 @@ export class AuthService {
 
   loginApi(user: string, pass: string): Promise<boolean>{
     console.log(user);
+    this.user = user;
     return new Promise((resolve)=>{
       this.api.login(user).subscribe((response: any)=>{
         console.log(response)
@@ -192,6 +195,10 @@ export class AuthService {
   getErrMsg(){
     return this.errorMsg;
   };
+
+  getUser(){
+    return this.user;
+  }
 
 
   generarToast(mensaje: string) {

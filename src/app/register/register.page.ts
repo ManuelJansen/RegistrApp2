@@ -4,6 +4,7 @@ import { AnimationController } from '@ionic/angular';
 import { AuthService } from '../Servicios/auth.service';
 import { ToastController } from '@ionic/angular';
 import { ApiService } from '../Servicios/api.service';
+import { RecuperarPassService } from '../Servicios/recuperar-pass.service';
 
 @Component({
   selector: 'app-register',
@@ -18,6 +19,7 @@ export class RegisterPage implements OnInit {
     private auth: AuthService,
     private toast: ToastController,
     private api: ApiService,
+    private emailjs: RecuperarPassService
   ) { }
 
   ngOnInit() { }
@@ -74,6 +76,16 @@ export class RegisterPage implements OnInit {
         console.log(res);
         if (res) {
           this.generarToast('Registro Exitoso');
+          const data = {
+            user_name: this.user.usuario,
+            user_email: this.user.correo,
+          }
+          try{
+            this.emailjs.sendEmail2(data);
+          }catch{
+            this.generarToast('Error enviando correo');
+          }
+          
           console.log(res);
         }
       });
