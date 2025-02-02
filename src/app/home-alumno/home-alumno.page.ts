@@ -2,9 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../Servicios/auth.service';
 import { QrScannerService } from '../Servicios/qr-scanner.service';
-
-
-
  
 
 @Component({
