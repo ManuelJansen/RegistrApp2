@@ -26,16 +26,15 @@
       </ion-card-header>
       <ion-card-content>
         <div class="qr-container">
-          <ion-button id="BtnAzules" (click)="mostrarQR('assets/img/Clase1.png')"> QR Clase 1</ion-button>
+          <ion-button id="BtnAzules" (click)="mostrarQR('assets/img/Clase1.png')"> QR Clase Etica</ion-button>
         </div>
         <div class="qr-container">
-          <ion-button id="BtnAzules" (click)="mostrarQR('assets/img/Clase2.png')"> QR Clase 2</ion-button>
+          <ion-button id="BtnAzules" (click)="mostrarQR('assets/img/Clase2.png')"> QR Clase Programacion</ion-button>
         </div>
       </ion-card-content>
     </ion-card>
   </div>
 
-  <!-- Modal para mostrar el QR en grande -->
   <ion-modal [isOpen]="mostrarModal" (didDismiss)="cerrarQR()">
     <ion-header>
       <ion-toolbar>
@@ -47,10 +46,9 @@
     </ion-header>
     <ion-content class="ion-padding">
       <div class="qr-modal-container">
-        <ion-img [src]="qrSeleccionado" class="qr-grande"></ion-img>
+        <ion-img *ngIf="qrSeleccionado" [src]="qrSeleccionado" class="qr-grande" (ionError)="handleImageError()"></ion-img>
       </div>
     </ion-content>
   </ion-modal>
-
   
 </ion-content>
